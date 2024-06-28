@@ -1,19 +1,21 @@
 package com.example.ParkingMeterFIAP.models;
 
 import com.example.ParkingMeterFIAP.models.enums.PaymentMethod;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
+@Document
 public class Conductor implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    @Id
+    private String id;
 
     private String name;
 

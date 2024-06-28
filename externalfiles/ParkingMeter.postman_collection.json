@@ -1,0 +1,131 @@
+{
+	"info": {
+		"_postman_id": "e5b0e587-4444-4197-948e-06c037acecab",
+		"name": "ParkingMeter",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8121599"
+	},
+	"item": [
+		{
+			"name": "Conductor",
+			"item": [
+				{
+					"name": "save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \r\n    \"name\": \"João da Silva\",\r\n    \"cpf\": \"123.456.789-00\",\r\n    \"email\": \"joao.silva@example.com\",\r\n    \"cel\": \"(12) 34567-8901\",\r\n    \"address\": {        \r\n        \"street\": \"Rua das Flores\",\r\n        \"number\": \"123\",\r\n        \"city\": \"São Paulo\",\r\n        \"state\": \"SP\",\r\n        \"zipCode\": \"01234-567\",\r\n        \"complement\": \"Apartamento 101\"\r\n    },\r\n    \"vehicles\": [\r\n        {\r\n            \"licensePlate\": \"ABC1234\",\r\n            \"brand\": \"Toyota\",\r\n            \"model\": \"Camry\",\r\n            \"color\": \"Silver\"\r\n        },\r\n        {\r\n            \"licensePlate\": \"DEF5678\",\r\n            \"brand\": \"Yamaha\",\r\n            \"model\": \"YBR\",\r\n            \"color\": \"Red\"\r\n        }\r\n    ],\r\n    \"paymentMethod\": \"CREDIT\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/ParkingMeter",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ParkingMeter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \r\n    \"id\": \"667f46c02d78523df7a30dc0\",\r\n    \"name\": \"João da Silva - Alterado\",\r\n    \"cpf\": \"999.999.999-99\",\r\n    \"email\": \"alterado@example.com\",\r\n    \"cel\": \"(99) 99999-8999\",\r\n    \"address\": {        \r\n        \"street\": \"Rua das Flores - Alterado\",\r\n        \"number\": \"999\",\r\n        \"city\": \"Cidade - Alterado\",\r\n        \"state\": \"XX\",\r\n        \"zipCode\": \"99999-999\",\r\n        \"complement\": \"Apartamento 101 - Alterado\"\r\n    },\r\n    \"vehicles\": [\r\n        {\r\n            \"licensePlate\": \"XDXD999\",\r\n            \"brand\": \"Toyota - Alterado\",\r\n            \"model\": \"Corola\",\r\n            \"color\": \"Gold\"\r\n        }        \r\n    ],\r\n    \"paymentMethod\": \"PIX\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/ParkingMeter/667f47f4b5b5d01f80709a11",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ParkingMeter",
+								"667f47f4b5b5d01f80709a11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/ParkingMeter/667f47f4b5b5d01f80709a11",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ParkingMeter",
+								"667f47f4b5b5d01f80709a11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/ParkingMeter",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ParkingMeter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/ParkingMeter/667f47f4b5b5d01f80709a11",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ParkingMeter",
+								"667f47f4b5b5d01f80709a11"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
