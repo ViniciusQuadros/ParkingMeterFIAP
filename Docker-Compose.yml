@@ -1,0 +1,15 @@
+services:
+  mongodb:
+    image: mongo
+    container_name: mongo-container
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: user
+      MONGO_INITDB_ROOT_PASSWORD: pass
+    ports:
+      - "27018:27017"
+    networks:
+      - minha-rede
+
+networks:
+  minha-rede:
+    driver: bridge
