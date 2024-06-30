@@ -1,4 +1,5 @@
 services:
+
   mongodb:
     image: mongo:latest
     container_name: mongo-container
@@ -12,6 +13,25 @@ services:
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     networks:
       - rede-parkingmeter
+
+#java17:
+#  image: openjdk:17-jdk-alpine
+#  ports:
+#    - "8080:8080"
+#  volumes:
+#    - ./target:/app/target
+#  working_dir: /app
+#  command: sh -c 'java -jar target/*.jar'
+#  depends_on:
+#    - mongodb
+#  environment:
+#    SPRING_DATA_MONGODB_HOST: mongo-container
+#    SPRING_DATA_MONGODB_PORT: 27017
+#    SPRING_DATA_MONGODB_DATABASE: parkingmeterdb
+#    SPRING_DATA_MONGODB_USERNAME: user_parkingmeter
+#    SPRING_DATA_MONGODB_PASSWORD: pass_parkingmeter
+#  networks:
+#    - rede-parkingmeter
 
 networks:
   rede-parkingmeter:
