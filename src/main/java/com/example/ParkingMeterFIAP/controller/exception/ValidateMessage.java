@@ -2,29 +2,29 @@ package com.example.ParkingMeterFIAP.controller.exception;
 
 public class ValidateMessage {
 
-    private String campo;
-    private String mensagem;
+    private String field;
+    private String message;
 
     public ValidateMessage(){}
 
-    public String getCampo() {
-        return campo;
+    public String getField() {
+        return field;
     }
 
-    public void setCampo(String campo) {
-        this.campo = campo;
+    public void setField(String field) {
+        this.field = field;
     }
 
-    public String getMensagem() {
-        return mensagem;
+    public String getMessage() {
+        return message;
     }
 
-    public void setMensagem(String mensagem) {
-        this.mensagem = mensagem;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public ValidateMessage(String campo, String mensagem) {
-        this.campo = campo;
-        this.mensagem = mensagem;
+    public ValidateMessage(String field, String message) {
+        this.field = field;
+        this.message = message;
     }
 }
