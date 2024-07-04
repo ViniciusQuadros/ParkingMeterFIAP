@@ -10,7 +10,7 @@ public class ValidateError extends StandardError{
         return messages;
     }
 
-    public void addMensagens(String field, String message) {
+    public void addMessages(String field, String message) {
         messages.add(new ValidateMessage(field, message));
     }
 
