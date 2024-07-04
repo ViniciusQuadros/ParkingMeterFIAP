@@ -44,7 +44,7 @@ public class ControllerExceptionHandler {
         validateError.setPath(request.getRequestURI());
 
         for(FieldError f : e.getBindingResult().getFieldErrors()) {
-            validateError.addMensagens(f.getField(), f.getDefaultMessage());
+            validateError.addMessages(f.getField(), f.getDefaultMessage());
         }
 
         return ResponseEntity.status(status).body(validateError);
