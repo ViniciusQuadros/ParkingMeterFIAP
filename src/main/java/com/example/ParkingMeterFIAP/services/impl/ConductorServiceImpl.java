@@ -63,7 +63,6 @@ public class ConductorServiceImpl implements ConductorService {
 
     @Override
     public Conductor findById(String id) {
-        //return conductorRepository.findById(id);
         Conductor conductor = conductorRepository.findById(id)
                 .orElseThrow( () ->
                         new ControllerNotFoundException("Conductor not Existing"));
