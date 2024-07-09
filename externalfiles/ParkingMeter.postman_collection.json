@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{    \r\n    \"name\": \"João da Silva\",\r\n    \"cpf\": \"123.456.789-00\",\r\n    \"email\": \"joao.silva@example.com\",\r\n    \"cel\": \"(12) 34567-8901\",\r\n    \"address\": {        \r\n        \"street\": \"Rua das Flores\",\r\n        \"number\": \"123\",\r\n        \"city\": \"São Paulo\",\r\n        \"state\": \"SP\",\r\n        \"zipCode\": \"01234-567\",\r\n        \"complement\": \"Apartamento 101\"\r\n    },\r\n    \"vehicles\": [\r\n        {\r\n            \"licensePlate\": \"ABC1234\",\r\n            \"brand\": \"Toyota\",\r\n            \"model\": \"Camry\",\r\n            \"color\": \"Silver\"\r\n        },\r\n        {\r\n            \"licensePlate\": \"DEF5678\",\r\n            \"brand\": \"Yamaha\",\r\n            \"model\": \"YBR\",\r\n            \"color\": \"Red\"\r\n        }\r\n    ],\r\n    \"paymentMethod\": \"CREDIT\"\r\n}",
+							"raw": "{    \r\n    \"name\": \"João da Silva\",\r\n    \"cpf\": \"123.456.789-00\",\r\n    \"email\": \"joao.silva@hotmail.com\",\r\n    \"cel\": \"(11)34567-8901\",\r\n    \"address\": {        \r\n        \"street\": \"Rua das Flores\",\r\n        \"number\": \"123\",\r\n        \"city\": \"São Paulo\",\r\n        \"state\": \"SP\",\r\n        \"zipCode\": \"01234-567\",\r\n        \"complement\": \"Apartamento 101A\"\r\n    },\r\n    \"vehicles\": [\r\n        {\r\n            \"licensePlate\": \"ABC1234\",\r\n            \"brand\": \"Toyota\",\r\n            \"model\": \"Corolla\",\r\n            \"color\": \"Prata\"\r\n        },\r\n        {\r\n            \"licensePlate\": \"DEF5678\",\r\n            \"brand\": \"Yamaha\",\r\n            \"model\": \"YBR\",\r\n            \"color\": \"Vermelha\"\r\n        }\r\n    ],\r\n    \"paymentMethod\": \"CREDIT\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -24,14 +24,15 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/v1/ParkingMeter",
+							"raw": "{{host}}/api/v1/ParkingMeter/Conductor",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"ParkingMeter"
+								"ParkingMeter",
+								"Conductor"
 							]
 						}
 					},
@@ -44,7 +45,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{    \r\n    \"id\": \"667f46c02d78523df7a30dc0\",\r\n    \"name\": \"João da Silva - Alterado\",\r\n    \"cpf\": \"999.999.999-99\",\r\n    \"email\": \"alterado@example.com\",\r\n    \"cel\": \"(99) 99999-8999\",\r\n    \"address\": {        \r\n        \"street\": \"Rua das Flores - Alterado\",\r\n        \"number\": \"999\",\r\n        \"city\": \"Cidade - Alterado\",\r\n        \"state\": \"XX\",\r\n        \"zipCode\": \"99999-999\",\r\n        \"complement\": \"Apartamento 101 - Alterado\"\r\n    },\r\n    \"vehicles\": [\r\n        {\r\n            \"licensePlate\": \"XDXD999\",\r\n            \"brand\": \"Toyota - Alterado\",\r\n            \"model\": \"Corola\",\r\n            \"color\": \"Gold\"\r\n        }        \r\n    ],\r\n    \"paymentMethod\": \"PIX\"\r\n}",
+							"raw": "{\r\n    \"id\": \"668d3e4b34943f5a6626c56a\",\r\n    \"name\": \"João da Silva - ALT\",\r\n    \"cpf\": \"123.456.789-99\",\r\n    \"email\": \"joao.silva@alterado.com\",\r\n    \"cel\": \"(11)34567-8999\",\r\n    \"address\": {\r\n        \"street\": \"Rua das Flores - ALT\",\r\n        \"number\": \"123 - ALT\",\r\n        \"city\": \"São Paulo - ALT\",\r\n        \"state\": \"SP - ALT\",\r\n        \"zipCode\": \"01234-599\",\r\n        \"complement\": \"Apartamento 101A - ALT\"\r\n    },\r\n    \"vehicles\": [\r\n        {\r\n            \"licensePlate\": \"ABC1234 - ALT\",\r\n            \"brand\": \"Toyota - ALT\",\r\n            \"model\": \"Corolla - ALT\",\r\n            \"color\": \"Prata - ALT\"\r\n        },\r\n        {\r\n            \"licensePlate\": \"DEF5678 - ALT\",\r\n            \"brand\": \"Yamaha - ALT\",\r\n            \"model\": \"YBR - ALT\",\r\n            \"color\": \"Vermelha - ALT\"\r\n        }\r\n    ],\r\n    \"paymentMethod\": \"PIX\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -52,7 +53,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/v1/ParkingMeter/667f47f4b5b5d01f80709a11",
+							"raw": "{{host}}/api/v1/ParkingMeter/Conductor/668d3e4b34943f5a6626c56a",
 							"host": [
 								"{{host}}"
 							],
@@ -60,7 +61,8 @@
 								"api",
 								"v1",
 								"ParkingMeter",
-								"667f47f4b5b5d01f80709a11"
+								"Conductor",
+								"668d3e4b34943f5a6626c56a"
 							]
 						}
 					},
@@ -72,7 +74,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/api/v1/ParkingMeter/667f47f4b5b5d01f80709a11",
+							"raw": "{{host}}/api/v1/ParkingMeter/Conductor/668d3e4b34943f5a6626c56a",
 							"host": [
 								"{{host}}"
 							],
@@ -80,7 +82,8 @@
 								"api",
 								"v1",
 								"ParkingMeter",
-								"667f47f4b5b5d01f80709a11"
+								"Conductor",
+								"668d3e4b34943f5a6626c56a"
 							]
 						}
 					},
@@ -92,14 +95,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/api/v1/ParkingMeter",
+							"raw": "{{host}}/api/v1/ParkingMeter/Conductor",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"ParkingMeter"
+								"ParkingMeter",
+								"Conductor"
 							]
 						}
 					},
@@ -111,7 +115,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/api/v1/ParkingMeter/667f47f4b5b5d01f80709a11",
+							"raw": "{{host}}/api/v1/ParkingMeter/Conductor/668d3e4b34943f5a6626c56a",
 							"host": [
 								"{{host}}"
 							],
@@ -119,7 +123,138 @@
 								"api",
 								"v1",
 								"ParkingMeter",
-								"667f47f4b5b5d01f80709a11"
+								"Conductor",
+								"668d3e4b34943f5a6626c56a"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ticket",
+			"item": [
+				{
+					"name": "save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \r\n    \"conductorId\": \"668d3eff34943f5a6626c56b\",\r\n    \"licensePlate\": \"ABC1234\",\r\n    \"typeParking\": \"FIX\",\r\n    \"date\": \"\",\r\n    \"initialHour\": null,\r\n    \"finalHour\": null,\r\n    \"time\": 12,\r\n    \"paymentMethod\": \"CREDIT\",\r\n    \"amount\": null,\r\n    \"tarifId\": null,\r\n    \"tariff\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/ParkingMeter/Ticket",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ParkingMeter",
+								"Ticket"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/ParkingMeter/Ticket/668d453b9dee18193b455269",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ParkingMeter",
+								"Ticket",
+								"668d453b9dee18193b455269"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/ParkingMeter/Ticket/668d472d3e9831330e2da9c1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ParkingMeter",
+								"Ticket",
+								"668d472d3e9831330e2da9c1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tariff",
+			"item": [
+				{
+					"name": "save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"initialTerm\": \"2024-01-01\",\r\n    \"finalTerm\": null,\r\n    \"tariff\": 1.5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/ParkingMeter/Tariff",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ParkingMeter",
+								"Tariff"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findByfinalTermIsNull",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/ParkingMeter/Tariff",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ParkingMeter",
+								"Tariff"
 							]
 						}
 					},
