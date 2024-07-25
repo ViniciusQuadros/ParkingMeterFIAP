@@ -33,5 +33,11 @@ public class TicketController {
         ticketService.save(ticket);
         return ResponseEntity.ok(ticket);
     }
+    
+    @GetMapping("/notify")
+    public ResponseEntity<Page<Ticket>> notifyTicket(Pageable pageable){
+        Page<Ticket> tickets = (Page<Ticket>) ticketService.notifyTicket(pageable);
+        return ResponseEntity.ok(tickets);
+    }
 
 }
