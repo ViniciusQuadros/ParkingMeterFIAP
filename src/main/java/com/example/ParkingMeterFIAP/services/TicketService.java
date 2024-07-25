@@ -2,6 +2,8 @@ package com.example.ParkingMeterFIAP.services;
 
 import com.example.ParkingMeterFIAP.models.Ticket;
 import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface TicketService {
     public ResponseEntity<?> save(Ticket ticket);
