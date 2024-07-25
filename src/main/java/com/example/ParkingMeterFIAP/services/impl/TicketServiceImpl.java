@@ -93,6 +93,7 @@ public class TicketServiceImpl implements TicketService {
                         new ControllerNotFoundException("Ticket not Existing"));
         return ticket;
     }
+
     @Override
     public List<Ticket> notifyTicket(){
         List<Ticket> allTickets = ticketRepository.findAll();
