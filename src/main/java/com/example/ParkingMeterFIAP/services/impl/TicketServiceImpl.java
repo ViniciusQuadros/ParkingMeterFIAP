@@ -91,4 +91,14 @@ public class TicketServiceImpl implements TicketService {
                         new ControllerNotFoundException("Ticket not Existing"));
         return ticket;
     }
+    @Override
+    public Page<?> notifyTicket(Pageable pageable){
+        Sort sort = Sort.by("date").ascending();
+        Pageable pagination =
+                PageRequest.of(pageable.getPageNumber(),
+                        pageable.getPageSize(), sort);
+
+        return ticketRepository.findAll(pagination);
+        //TODO
+    }
 }
