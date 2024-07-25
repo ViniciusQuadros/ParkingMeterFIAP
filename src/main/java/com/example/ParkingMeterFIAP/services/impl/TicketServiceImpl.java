@@ -12,13 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -96,13 +94,26 @@ public class TicketServiceImpl implements TicketService {
         return ticket;
     }
     @Override
-    public Page<?> notifyTicket(Pageable pageable){
-        Sort sort = Sort.by("date").ascending();
-        Pageable pagination =
-                PageRequest.of(pageable.getPageNumber(),
-                        pageable.getPageSize(), sort);
+    public List<Ticket> notifyTicket(){
+        List<Ticket> allTickets = ticketRepository.findAll();
 
-        return ticketRepository.findAll(pagination);
-        //TODO
+        allTickets.forEach(ticket -> {
+            if(ticket.getTypeParking().equals(TypeParking.FIX)){
+                calculateFixWarningTime(ticket);
+            }
+            if(ticket.getTypeParking().equals(TypeParking.VARIABLE)){
+                calculateVariableWarningType(ticket);
+            }
+        });
+        return allTickets;
+    }
+
+    private static void calculateFixWarningTime(Ticket ticket) {
+        ticket.setWarningTime(ticket.getFinalHour().minusMinutes(10));
+    }
+
+    private static void calculateVariableWarningType(Ticket ticket) {
+        long consumedHours = ChronoUnit.HOURS.between(ticket.getInitialHour(), LocalTime.now());
+        ticket.setWarningTime(ticket.getInitialHour().plusHours(consumedHours).plusMinutes(50));
     }
 }

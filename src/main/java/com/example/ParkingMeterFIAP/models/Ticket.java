@@ -30,6 +30,8 @@ public class Ticket implements Serializable {
 
     private LocalTime finalHour;
 
+    private LocalTime warningTime;
+
     private Integer time;
 
     private PaymentMethod paymentMethod;
