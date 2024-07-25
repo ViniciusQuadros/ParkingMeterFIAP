@@ -9,4 +9,5 @@ public interface TicketService {
     public void calcTicket(Ticket ticket);
     public void paymentIntegration(Ticket ticket);
     public Ticket findById(String id);
+    public Page<?> notifyTicket(Pageable pageable);
 }
