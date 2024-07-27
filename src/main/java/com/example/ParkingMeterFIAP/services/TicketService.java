@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface TicketService {
     public ResponseEntity<?> save(Ticket ticket);
-    public void validatePaymentMethodVersusTypeParking(Ticket ticket);
+    public void validatePaymentMethodVersusParkingType(Ticket ticket);
     public void calcTicket(Ticket ticket);
     public void paymentIntegration(Ticket ticket);
     public Ticket findById(String id);

@@ -14,10 +14,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TicketServiceImpl implements TicketService {
@@ -31,9 +32,10 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public ResponseEntity<?> save(Ticket ticket) {
         if (ticket.getId() == null || (ticket.getParkingType() == ParkingType.VARIABLE && ticket.getFinalDateTime() == null)) {
-            validatePaymentMethodVersusTypeParking(ticket);
+            validatePaymentMethodVersusParkingType(ticket);
             calcTicket(ticket);
             paymentIntegration(ticket);
+            calculateNotificationTime(ticket);
             ticketRepository.save(ticket);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         }else{
@@ -42,7 +44,7 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public void validatePaymentMethodVersusTypeParking(Ticket ticket) {
+    public void validatePaymentMethodVersusParkingType(Ticket ticket) {
         PaymentMethod paymentMethod = ticket.getPaymentMethod();
         if (paymentMethod.getRestrictionParkingType() != ParkingType.NONE) {
             throw new IllegalArgumentException("Payment method restricted by stop type");
@@ -97,25 +99,33 @@ public class TicketServiceImpl implements TicketService {
         List<Ticket> allTickets = ticketRepository.findAll();
 
         allTickets.forEach(ticket -> {
-            //if(ticket.getParkingType().equals(ParkingType.FIX)){
-            //    calculateFixWarningTime(ticket);
-            //}
-            if(ticket.getParkingType().equals(ParkingType.VARIABLE) && ticket.getFinalDateTime() == null){
-                calculateVariableWarningType(ticket);
+            if(ticket.getFinalDateTime() == null) {
+                calculateNotificationTime(ticket);
             }
         });
 
-        // @todo logica para apresentar somente os registros onde a data de notificação é maior que a data atual
-        // @todo Se Fixo não mostrar encerrados ( finalDateTime < DataAtual)
-        // @todo Se variável não mostrar encerrados ( finalDateTime preenchido )
+        allTickets = allTickets.stream()
+                .filter(ticket -> ticket.getNotificationDateTime().isAfter(LocalDateTime.now()))
+                .sorted(Comparator.comparing(Ticket::getNotificationDateTime))
+                .collect(Collectors.toList());
+
         return allTickets;
     }
 
-    private static void calculateFixWarningTime(Ticket ticket) {
+    private static void calculateNotificationTime(Ticket ticket) {
+        if(ticket.getParkingType().equals(ParkingType.FIX)){
+            calculateFixNotificationTime(ticket);
+        }
+        if(ticket.getParkingType().equals(ParkingType.VARIABLE) && ticket.getFinalDateTime() == null){
+            calculateVariableNotificationTime(ticket);
+        }
+    }
+
+    private static void calculateFixNotificationTime(Ticket ticket) {
         ticket.setNotificationDateTime(ticket.getFinalDateTime().minusMinutes(10));
     }
 
-    private static void calculateVariableWarningType(Ticket ticket) {
+    private static void calculateVariableNotificationTime(Ticket ticket) {
         long consumedHours = ChronoUnit.HOURS.between(ticket.getInitialDateTime(), LocalDateTime.now());
         ticket.setNotificationDateTime(ticket.getInitialDateTime().plusHours(consumedHours).plusMinutes(50));
     }
