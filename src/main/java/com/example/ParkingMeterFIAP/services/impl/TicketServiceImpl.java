@@ -112,7 +112,7 @@ public class TicketServiceImpl implements TicketService {
     }
 
     private static void calculateVariableWarningType(Ticket ticket) {
-        long consumedHours = ChronoUnit.HOURS.between(ticket.getInitialDateTime(), LocalTime.now());
+        long consumedHours = ChronoUnit.HOURS.between(ticket.getInitialDateTime(), LocalDateTime.now());
         ticket.setNotificationDateTime(ticket.getInitialDateTime().plusHours(consumedHours).plusMinutes(50));
     }
 }
