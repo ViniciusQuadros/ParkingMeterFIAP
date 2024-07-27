@@ -1,6 +1,6 @@
 package com.example.ParkingMeterFIAP.models.enums;
 
-public enum TypeParking {
+public enum ParkingType {
     FIX,
     VARIABLE,
     NONE

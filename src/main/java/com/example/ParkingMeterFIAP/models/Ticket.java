@@ -1,13 +1,12 @@
 package com.example.ParkingMeterFIAP.models;
 
 import com.example.ParkingMeterFIAP.models.enums.PaymentMethod;
-import com.example.ParkingMeterFIAP.models.enums.TypeParking;
+import com.example.ParkingMeterFIAP.models.enums.ParkingType;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 @Data
 @Document
@@ -22,21 +21,19 @@ public class Ticket implements Serializable {
 
     private String licensePlate;
 
-    private TypeParking typeParking;
+    private ParkingType parkingType;
 
-    private LocalDate date;
+    private LocalDateTime initialDateTime;
 
-    private LocalTime initialHour;
+    private LocalDateTime finalDateTime;
 
-    private LocalTime finalHour;
+    private LocalDateTime notificationDateTime;
 
-    private LocalTime warningTime;
-
-    private Integer time;
+    private Integer usageTime;
 
     private PaymentMethod paymentMethod;
 
-    private Double amount;
+    private Double paymentAmount;
 
     private String tariffId;
 
