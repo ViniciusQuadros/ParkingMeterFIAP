@@ -97,13 +97,17 @@ public class TicketServiceImpl implements TicketService {
         List<Ticket> allTickets = ticketRepository.findAll();
 
         allTickets.forEach(ticket -> {
-            if(ticket.getParkingType().equals(ParkingType.FIX)){
-                calculateFixWarningTime(ticket);
-            }
+            //if(ticket.getParkingType().equals(ParkingType.FIX)){
+            //    calculateFixWarningTime(ticket);
+            //}
             if(ticket.getParkingType().equals(ParkingType.VARIABLE) && ticket.getFinalDateTime() == null){
                 calculateVariableWarningType(ticket);
             }
         });
+
+        // @todo logica para apresentar somente os registros onde a data de notificação é maior que a data atual
+        // @todo Se Fixo não mostrar encerrados ( finalDateTime < DataAtual)
+        // @todo Se variável não mostrar encerrados ( finalDateTime preenchido )
         return allTickets;
     }
 
