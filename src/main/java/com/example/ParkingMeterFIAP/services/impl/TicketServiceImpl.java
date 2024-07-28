@@ -3,8 +3,8 @@ package com.example.ParkingMeterFIAP.services.impl;
 import com.example.ParkingMeterFIAP.controller.exception.ControllerNotFoundException;
 import com.example.ParkingMeterFIAP.models.Tariff;
 import com.example.ParkingMeterFIAP.models.Ticket;
+import com.example.ParkingMeterFIAP.models.enums.ParkingType;
 import com.example.ParkingMeterFIAP.models.enums.PaymentMethod;
-import com.example.ParkingMeterFIAP.models.enums.TypeParking;
 import com.example.ParkingMeterFIAP.repository.TariffRepository;
 import com.example.ParkingMeterFIAP.repository.TicketRepository;
 import com.example.ParkingMeterFIAP.services.TicketService;
@@ -12,10 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import java.time.LocalDate;
-import java.time.LocalTime;
+
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TicketServiceImpl implements TicketService {
@@ -28,10 +31,11 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public ResponseEntity<?> save(Ticket ticket) {
-        if (ticket.getId() == null || (ticket.getTypeParking() == TypeParking.VARIABLE && ticket.getFinalHour() == null)) {
-            validatePaymentMethodVersusTypeParking(ticket);
+        if (ticket.getId() == null || (ticket.getParkingType() == ParkingType.VARIABLE && ticket.getFinalDateTime() == null)) {
+            validatePaymentMethodVersusParkingType(ticket);
             calcTicket(ticket);
             paymentIntegration(ticket);
+            calculateNotificationTime(ticket);
             ticketRepository.save(ticket);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         }else{
@@ -40,9 +44,9 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public void validatePaymentMethodVersusTypeParking(Ticket ticket) {
+    public void validatePaymentMethodVersusParkingType(Ticket ticket) {
         PaymentMethod paymentMethod = ticket.getPaymentMethod();
-        if (paymentMethod.getRestrictionTypeParking() != TypeParking.NONE) {
+        if (paymentMethod.getRestrictionParkingType() != ParkingType.NONE) {
             throw new IllegalArgumentException("Payment method restricted by stop type");
         }
     }
@@ -55,28 +59,26 @@ public class TicketServiceImpl implements TicketService {
             ticket.setTariffId(tariff.get().getId());
         }
 
-        if(ticket.getTypeParking().equals(TypeParking.FIX)){
-            if(ticket.getTime() != null) {
-                ticket.setDate(LocalDate.now());
-                ticket.setInitialHour(LocalTime.now().withSecond(0).withNano(0));
-                ticket.setFinalHour(ticket.getInitialHour().plusHours(ticket.getTime()));
+        if(ticket.getParkingType().equals(ParkingType.FIX)){
+            if(ticket.getUsageTime() != null) {
+                ticket.setInitialDateTime(LocalDateTime.now().withSecond(0).withNano(0));
+                ticket.setFinalDateTime(ticket.getInitialDateTime().plusHours(ticket.getUsageTime()));
             }else{
                 throw new IllegalArgumentException("Mandatory time parameter");
             }
         }else{
-            if(ticket.getInitialHour() == null){
-                ticket.setDate(LocalDate.now());
-                ticket.setInitialHour(LocalTime.now().withSecond(0).withNano(0));
+            if(ticket.getInitialDateTime() == null){
+                ticket.setInitialDateTime(LocalDateTime.now().withSecond(0).withNano(0));
             }else{
-                ticket.setFinalHour(LocalTime.now().withSecond(0).withNano(0));
-                long difMinutes = ticket.getInitialHour().until(ticket.getFinalHour(), ChronoUnit.MINUTES);
+                ticket.setFinalDateTime(LocalDateTime.now().withSecond(0).withNano(0));
+                long difMinutes = ticket.getInitialDateTime().until(ticket.getFinalDateTime(), ChronoUnit.MINUTES);
                 long hours = (long) Math.ceil((double) difMinutes / 60);
-                ticket.setTime((int) hours);
+                ticket.setUsageTime((int) hours);
             }
         }
 
-        if(ticket.getTime() !=  null){
-            ticket.setAmount(ticket.getTariff() * ticket.getTime());
+        if(ticket.getUsageTime() !=  null){
+            ticket.setPaymentAmount(ticket.getTariff() * ticket.getUsageTime());
         }
     }
 
@@ -90,5 +92,41 @@ public class TicketServiceImpl implements TicketService {
                 .orElseThrow( () ->
                         new ControllerNotFoundException("Ticket not Existing"));
         return ticket;
+    }
+
+    @Override
+    public List<Ticket> notifyTicket(){
+        List<Ticket> allTickets = ticketRepository.findAll();
+
+        allTickets.forEach(ticket -> {
+            if(ticket.getFinalDateTime() == null) {
+                calculateNotificationTime(ticket);
+            }
+        });
+
+        allTickets = allTickets.stream()
+                .filter(ticket -> ticket.getNotificationDateTime() != null && ticket.getNotificationDateTime().isAfter(LocalDateTime.now()))
+                .sorted(Comparator.comparing(Ticket::getNotificationDateTime))
+                .collect(Collectors.toList());
+
+        return allTickets;
+    }
+
+    private static void calculateNotificationTime(Ticket ticket) {
+        if(ticket.getParkingType().equals(ParkingType.FIX)){
+            calculateFixNotificationTime(ticket);
+        }
+        if(ticket.getParkingType().equals(ParkingType.VARIABLE) && ticket.getFinalDateTime() == null){
+            calculateVariableNotificationTime(ticket);
+        }
+    }
+
+    private static void calculateFixNotificationTime(Ticket ticket) {
+        ticket.setNotificationDateTime(ticket.getFinalDateTime().minusMinutes(10));
+    }
+
+    private static void calculateVariableNotificationTime(Ticket ticket) {
+        long consumedHours = ChronoUnit.HOURS.between(ticket.getInitialDateTime(), LocalDateTime.now());
+        ticket.setNotificationDateTime(ticket.getInitialDateTime().plusHours(consumedHours).plusMinutes(50));
     }
 }

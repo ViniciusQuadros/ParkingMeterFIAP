@@ -4,15 +4,15 @@ import lombok.Getter;
 
 @Getter
 public enum PaymentMethod {
-    CREDIT("CREDIT", TypeParking.NONE),
-    DEBIT("DEBIT", TypeParking.NONE),
-    PIX("PIX", TypeParking.VARIABLE);
+    CREDIT("CREDIT", ParkingType.NONE),
+    DEBIT("DEBIT", ParkingType.NONE),
+    PIX("PIX", ParkingType.VARIABLE);
 
     private final String paymentMethod;
-    private final TypeParking restrictionTypeParking;
+    private final ParkingType restrictionParkingType;
 
-    PaymentMethod(String paymentMethod, TypeParking restrictionTypeParking) {
+    PaymentMethod(String paymentMethod, ParkingType restrictionParkingType) {
         this.paymentMethod = paymentMethod;
-        this.restrictionTypeParking = restrictionTypeParking;
+        this.restrictionParkingType = restrictionParkingType;
     }
 }

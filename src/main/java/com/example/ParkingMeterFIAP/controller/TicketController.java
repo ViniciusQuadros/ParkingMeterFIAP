@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/ParkingMeter/Ticket")
 public class TicketController {
@@ -32,6 +34,12 @@ public class TicketController {
         Ticket ticket = ticketService.findById(id);
         ticketService.save(ticket);
         return ResponseEntity.ok(ticket);
+    }
+    
+    @GetMapping("/notify")
+    public ResponseEntity<List<Ticket>> notifyTicket(){
+        List<Ticket> tickets = ticketService.notifyTicket();
+        return ResponseEntity.ok(tickets);
     }
 
 }
