@@ -105,7 +105,15 @@ public class TicketServiceImpl implements TicketService {
         });
 
         allTickets = allTickets.stream()
-                .filter(ticket -> ticket.getNotificationDateTime() != null && ticket.getNotificationDateTime().isAfter(LocalDateTime.now()))
+                .filter(ticket -> ticket.getNotificationDateTime() != null
+                        && ticket.getNotificationDateTime().isBefore(LocalDateTime.now())
+                        && ((ticket.getParkingType().equals(ParkingType.FIX)
+                            && LocalDateTime.now().isBefore(ticket.getFinalDateTime()))
+                        || (ticket.getParkingType().equals(ParkingType.VARIABLE)
+                            && LocalDateTime.now().isBefore(ticket.getNotificationDateTime().plusMinutes(10)))
+                            && ticket.getFinalDateTime() == null)
+
+                )
                 .sorted(Comparator.comparing(Ticket::getNotificationDateTime))
                 .collect(Collectors.toList());
 
